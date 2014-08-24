@@ -19,5 +19,9 @@
   "bugs": {
     "url": "https://github.com/cronin2004/scripture-service/issues"
   },
-  "homepage": "https://github.com/cronin2004/scripture-service"
+  "homepage": "https://github.com/cronin2004/scripture-service",
+  "dependencies": {
+    "express": "^4.8.5",
+    "mysql": "^2.4.2"
+  }
 }
