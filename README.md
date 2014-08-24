@@ -1,9 +1,6 @@
 scripture-service
 =================
 
-JSNode service for retrieving bible scripture in a supported language with a pretty picture.
+NodeJS service for retrieving bible scripture in a supported language with a pretty picture and social sharing.
 
-Requires the following NodeJS module:
-<br>-express
-<br>-mysql
 
