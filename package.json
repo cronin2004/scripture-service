@@ -1,0 +1,23 @@
+{
+  "name": "scripture-service",
+  "version": "0.0.0",
+  "description": "A simple service that displays web pages of localized Scripture and images and makes them sharable.",
+  "main": "ScriptureService.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cronin2004/scripture-service.git"
+  },
+  "keywords": [
+    "scripture",
+    "bible"
+  ],
+  "author": "cronin2004",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cronin2004/scripture-service/issues"
+  },
+  "homepage": "https://github.com/cronin2004/scripture-service"
+}
