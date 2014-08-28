@@ -1,0 +1,27 @@
+{
+  "name": "supported_dbp_verse",
+  "plural": "supported_dbp_verses",
+  "base": "PersistedModel",
+  "properties": {
+    "book_id": {
+      "type": "string",
+      "required": true
+    },
+    "chapter_id": {
+      "type": "number",
+      "required": true
+    },
+    "verse_start": {
+      "type": "number",
+      "required": true
+    },
+    "verse_end": {
+      "type": "number",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}

@@ -1,0 +1,14 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  },
+  "mysql": {
+    "host": "localhost",
+    "database": "scripture_service",
+    "username": "root",
+    "password": "root",
+    "name": "mysql",
+    "connector": "mysql"
+  }
+}

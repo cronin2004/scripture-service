@@ -1,0 +1,43 @@
+{
+  "_meta": {
+    "sources": [
+      "../common/models",
+      "./models"
+    ]
+  },
+  "User": {
+    "dataSource": "db"
+  },
+  "AccessToken": {
+    "public": false,
+    "dataSource": "db"
+  },
+  "ACL": {
+    "public": false,
+    "dataSource": "db"
+  },
+  "RoleMapping": {
+    "public": false,
+    "dataSource": "db"
+  },
+  "Role": {
+    "public": false,
+    "dataSource": "db"
+  },
+  "day_image": {
+    "public": true,
+    "dataSource": "mysql"
+  },
+  "supported_dbp_language": {
+    "public": true,
+    "dataSource": "mysql"
+  },
+  "supported_dbp_version": {
+    "public": true,
+    "dataSource": "mysql"
+  },
+  "supported_dbp_verse": {
+    "public": true,
+    "dataSource": "mysql"
+  }
+}

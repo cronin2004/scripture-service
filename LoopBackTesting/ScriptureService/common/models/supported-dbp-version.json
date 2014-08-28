@@ -1,0 +1,15 @@
+{
+  "name": "supported_dbp_version",
+  "plural": "supported_dbp_versions",
+  "base": "PersistedModel",
+  "properties": {
+    "version_code": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}
