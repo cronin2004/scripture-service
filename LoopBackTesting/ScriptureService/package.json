@@ -12,6 +12,7 @@
     "loopback-boot": "^2.0.0",
     "loopback-connector-mysql": "^1.4.5",
     "loopback-datasource-juggler": "^2.0.0",
+    "q": "^1.0.1",
     "serve-favicon": "^2.0.1"
   },
   "optionalDependencies": {
