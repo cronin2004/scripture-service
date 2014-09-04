@@ -1,8 +1,10 @@
 var loopback = require('loopback');
 var boot = require('loopback-boot');
 var http = require('http');
+var RSVP = require('rsvp');
 // var q = require('q');
 // var ss = require('./ScriptureService');
+var dbpHelper = require('./dbphelper')("dbpApiKey");
 
 var app = module.exports = loopback();
 var models = app.models();
@@ -38,8 +40,29 @@ var GetMethod = function(req, res) {
 	var languageModel = app.models.supported_dbp_language;
 	var verseModel = app.models.supported_dbp_verse;
 	var versionModel = app.models.supported_dbp_version;
-	var dbpApiKey = "";
-	
+
+  function getDayImage(dayNumber) {
+      var dayImage = "baseImage.jpg";
+      var result = new RSVP.Promise(function (resolve, reject) {
+        dayImageModel.findOne({where: {day : dayNumber}}, function(err, dayImage)
+        {
+          if (err || !dayNumber)
+          {
+            console.log("Could not find day image link, using base image", err);
+            resolve(dayImage); // resolve to default image instead of error.
+          }
+          else
+          {
+            console.log("Image found");
+            dayImage = "dbImage.jpg";
+            resolve(dayImage);
+          }
+        });
+      });
+
+      return result;
+  }
+
 	// First get the verse id;
 	verseModel.findOne({where: { id : rid }}, function(err, verse)
 	{
@@ -49,82 +72,29 @@ var GetMethod = function(req, res) {
 		}
 		else if (verse)
 		{
-			var ntBooks = ['Matt','Mark','Luke','John','Acts','Rom','1Cor','2Cor','Gal','Eph','Phil','Col','1Thess','2Thess','1Tim','2Tim','Titus','Phlm','Heb','Jas','1Pet','2Pet','1John','2John','3John','Jude','Rev'];
-			
-			// this decides which volume to use based on the book requested.
-			var getVolume = function (book, language) {
-				var versionCode = ntBooks.indexOf(book) > -1 ? 'ESVN2ET' : 'ESVO2ET'
-				versionCode = language + versionCode;
-				console.log("Version Code: " + versionCode);
-				return versionCode;
-			};
-			
-			var getDayImage = function(dayNumber)
-			{
-				var dayImage = "baseImage.jpg";
-				//var findDayImage = q.denodify(dayImageModel.findOne);
-				dayImageModel.findOne({where: {day : dayNumber}}, function(err, dayImageNumber)
-				{
-					if (err || !dayNumber)
-					{
-						console.log("Could not find day image link, using base image");
-					}
-					else
-					{
-						console.log("Image found");
-						dayImage = "dbImage.jpg";
-					}
-				});
-				
-				console.log("Day image: " + dayImage);
-				return dayImage;
-			};
-			
-			var combineVerses = function(verses)
-			{
-				var combinedVerses = '';
-				for(var i = 0; i < verses.length; i++)
-				{
-					combinedVerses += verses[i].verse_text;
-				}
-				
-				return combinedVerses;
-			};
-			
-			var getVerseReferenceString = function(book, chapter, verseBegin, verseEnd)
-			{
-				return book + ' ' + chapter + ':' + verseBegin + '-' + verseEnd;
-			}
-			
-			var dam_id = getVolume(verse.book_id, language);
-	 
-			var dbtUrl = 'http://dbt.io/text/verse?v=2&key=' +
-			  dbpApiKey +
-			  '&book_id=' + verse.book_id + '&chapter_id=' + verse.chapter_id +
-			  '&verse_start=' + verse.verse_start + '&verse_end=' + verse.verse_end +
-			  '&dam_id=' + dam_id;
-			
-			http.get(dbtUrl, function(dbtResponse) {
-			   dbtResponse.on('data', function (chunk)
-			   {
-				var verses = JSON.parse(chunk);
-
-				var combinedVerses = combineVerses(verses);
-				var verseReference = getVerseReferenceString(verse.book_id, verse.chapter_id, verse.verse_start, verse.verse_end);
-				var dayImage = getDayImage(rday);
-				
-				res.send({scripture : combinedVerses, reference: verseReference, image : dayImage, dbp:{fullLink : dbtUrl }});
-			  });
-			}).on('error', function(e) {
-			  res.send("Got error: " + e.message);
-			});
-			//res.send(dbtUrl);
+      var scripture = dbpHelper.getScripture(verse, language);
+			scripture.then(function(response) {
+        var combinedVerses = dbpHelper.combineVerses(response.verses);
+				var verseReference = dbpHelper.getVerseReferenceString(verse.book_id, verse.chapter_id, verse.verse_start, verse.verse_end);
+				var imagePromise = getDayImage(rday);
+        imagePromise.then(function (dayImage) {
+          var finalResponse = {
+            scripture : combinedVerses,
+            reference: verseReference,
+            image : dayImage,
+            dbp: {
+              fullLink : response.dbtUrl
+            }
+          };
+          res.send(finalResponse);
+        });
+      });
 		}
 		else
 		{
 			res.send("no instance found");
 		}
-	});	
+	});
 };
 
 app.get('/:id', GetMethod);
