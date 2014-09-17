@@ -9,35 +9,35 @@
     "dataSource": "db"
   },
   "AccessToken": {
-    "public": false,
-    "dataSource": "db"
+    "dataSource": "db",
+    "public": false
   },
   "ACL": {
-    "public": false,
-    "dataSource": "db"
+    "dataSource": "db",
+    "public": false
   },
   "RoleMapping": {
-    "public": false,
-    "dataSource": "db"
+    "dataSource": "db",
+    "public": false
   },
   "Role": {
-    "public": false,
-    "dataSource": "db"
+    "dataSource": "db",
+    "public": false
   },
   "day_image": {
-    "public": true,
-    "dataSource": "mysql"
+    "dataSource": "mysql",
+    "public": true
   },
   "supported_dbp_language": {
-    "public": true,
-    "dataSource": "mysql"
+    "dataSource": "mysql",
+    "public": true
   },
   "supported_dbp_version": {
-    "public": true,
-    "dataSource": "mysql"
+    "dataSource": "mysql",
+    "public": true
   },
   "supported_dbp_verse": {
-    "public": true,
-    "dataSource": "mysql"
+    "dataSource": "mysql",
+    "public": true
   }
 }

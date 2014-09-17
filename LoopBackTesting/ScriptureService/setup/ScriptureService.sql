@@ -8,19 +8,20 @@ CREATE TABLE `scripture_service`.`day_image` (
   UNIQUE KEY `day_UNIQUE` (`day`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `scripture_service`.`supported_dbp_version` (
+/* CREATE TABLE `scripture_service`.`supported_dbp_version` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `version_code` varchar(3) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `versioncode_UNIQUE` (`version_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8; */
 
-CREATE TABLE `scripture_service`.`supported_dbp_language` (
+CREATE TABLE `supported_dbp_language` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `language_code` varchar(3) NOT NULL,
+  `default_version_code` varchar(3) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `language_code_UNIQUE` (`language_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `scripture_service`.`supported_dbp_verse` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
